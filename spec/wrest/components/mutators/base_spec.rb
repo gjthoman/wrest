@@ -17,7 +17,7 @@ module Wrest::Components
     end
 
     it "should ensure that the next mutator is invoked for a subclass" do
-      next_mutator = mock('Mutator')
+      next_mutator = double('Mutator')
       mutator = Mutators::CamelToSnakeCase.new(next_mutator)
 
       next_mutator.should_receive(:mutate).with(['a', 1]).and_return([:a, '1'])
@@ -34,7 +34,7 @@ module Wrest::Components
       }]]
       ).should == ["result", {"publish_date" => "1240326000", "news_source" => {"online"=>"PC via News", "unique_id"=>1}}]
     end
-    
+
     it "should register all subclasses in the registry" do
       class SomeMutator < Mutators::Base; end
       Mutators::REGISTRY[:some_mutator].should == SomeMutator
